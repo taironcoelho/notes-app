@@ -24,12 +24,7 @@ describe('Notes App', () => {
   });
 
   it('create notes', () => {
-    cy.get('form').within(() => {
-      cy.get('input').type('Note Title');
-      cy.get('textarea').type('Note Description');
-      cy.get('button').click();
-    });
-
+    createNote('Note Title', 'Note Description');
     cy.get('ul li').should($noteCard => {
       // should have found 1 element
       expect($noteCard).to.have.length(1);
@@ -47,9 +42,7 @@ describe('Notes App', () => {
       cy.get('textarea').should('have.value', '');
 
       //should be able to create a second note
-      cy.get('input').type('Note Title 2');
-      cy.get('textarea').type('Note Description 3');
-      cy.get('button').click();
+      createNote('Note Title 2', 'Note Description 3');
     });
 
     cy.get('ul li').should($noteCard => {
@@ -63,4 +56,24 @@ describe('Notes App', () => {
       expect($noteCard[1]).to.contain('Note Description 3');
     });
   });
+
+  it('delete notes', () => {
+    createNote('Note Title', 'Note Description');
+    createNote('Note Title 2', 'Note Description 2');
+    cy.get('[data-testid="delete-icon"]').first().click();
+
+    cy.get('ul li').should($noteCard => {
+      expect($noteCard).to.have.length(1);
+      expect($noteCard[0]).to.contain('Note Title 2');
+      expect($noteCard[0]).to.contain('Note Description 2');
+    });
+  });
 });
+
+function createNote(title, text) {
+  cy.get('form').within(() => {
+    cy.get('input').type(title);
+    cy.get('textarea').type(text);
+    cy.get('button').click();
+  });
+}
