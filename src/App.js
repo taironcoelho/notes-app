@@ -14,8 +14,8 @@ class App extends Component {
   }
 
   createNote(note) {
-    const newNotes = [...this.state.notes, note];
-    this.setState({...this.state, notes: newNotes});
+    const notes = [...this.state.notes, note];
+    this.setState({...this.state, notes: notes});
   }
 
   render() {
