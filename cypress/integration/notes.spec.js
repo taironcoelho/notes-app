@@ -40,10 +40,8 @@ describe('Notes App', () => {
       // should find empty values in the form
       cy.get('input').should('have.value', '');
       cy.get('textarea').should('have.value', '');
-
-      //should be able to create a second note
-      createNote('Note Title 2', 'Note Description 3');
     });
+    createNote('Note Title 2', 'Note Description 3');
 
     cy.get('ul li').should($noteCard => {
       // should have found 2 element
