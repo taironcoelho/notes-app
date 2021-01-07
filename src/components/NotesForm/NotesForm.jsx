@@ -7,11 +7,30 @@ export default class NotesForm extends Component {
     this.state = {
       title: '',
       text: '',
+      category: '',
+      categories: [],
     };
 
+    this.updateCategories = this.updateCategories.bind(this);
     this._handleInputChange = this._handleInputChange.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
     this._createNote = this._createNote.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      categories: this.props.categories.categories,
+    });
+    this.props.categories.attach(this.updateCategories);
+  }
+
+  componentWillUnmount() {
+    this.props.categories.detach(this.updateCategories);
+  }
+
+  updateCategories(categories) {
+    this.setState({...this.state, categories: categories});
   }
 
   _handleInputChange(target, value) {
@@ -31,16 +50,29 @@ export default class NotesForm extends Component {
   }
 
   _createNote() {
-    this.props.createNote(this.state);
+    this.props.createNote(
+      this.state.title,
+      this.state.text,
+      this.state.category,
+    );
   }
 
   _resetForm() {
-    this.setState({title: '', text: ''});
+    this.setState({title: '', text: '', category: 'Not Categorized'});
   }
 
   render() {
     return (
       <form className="notes-form" onSubmit={this._handleFormSubmit}>
+        <select
+          className="notes-form__input"
+          onChange={e => this._handleInputChange('category', e.target.value)}
+        >
+          <option>Not categorized</option>
+          {this.state.categories.map((category, index) => {
+            return <option key={index}>{category}</option>;
+          })}
+        </select>
         <input
           id="title"
           className="notes-form__input"
