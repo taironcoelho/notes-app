@@ -12,7 +12,7 @@ export default class NotesList extends Component {
   }
 
   componentDidMount() {
-    this.setState(this.props.notes);
+    this.setState({...this.state, notes: this.props.notes.notes});
     this.props.notes.attach(this._updateNotes);
   }
 

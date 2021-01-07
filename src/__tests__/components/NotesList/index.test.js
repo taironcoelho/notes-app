@@ -6,6 +6,13 @@ jest.mock('../../../data/Notes');
 
 beforeEach(() => {
   Notes.mockClear();
+  Notes.mockImplementation(() => {
+    return {
+      notes: [],
+      attach: jest.fn(),
+      detach: jest.fn(),
+    };
+  });
 });
 
 describe('Components - NotesList', () => {
@@ -21,8 +28,8 @@ describe('Components - NotesList', () => {
           {title: 'Note 1', text: 'Description of Note 1'},
           {title: 'Note 2', text: 'Description of Note 2'},
         ],
-        attach: () => {},
-        detach: () => {},
+        attach: jest.fn(),
+        detach: jest.fn(),
       };
     });
 
