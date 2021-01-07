@@ -6,6 +6,7 @@ describe('Components - NoteCard', () => {
   const note = {
     title: 'Note 1',
     text: 'Description of Note 1',
+    category: 'Category',
   };
 
   test('Should render correctly when it receive a note', () => {
@@ -13,6 +14,7 @@ describe('Components - NoteCard', () => {
 
     expect(queryByText('Note 1')).not.toBeNull();
     expect(queryByText('Description of Note 1')).not.toBeNull();
+    expect(queryByText('Category')).not.toBeNull();
     expect(queryByTestId('delete-icon')).not.toBeNull();
   });
 

@@ -16,6 +16,7 @@ class NoteCard extends Component {
         <header>
           <h3>{this.props.note.title}</h3>
           <DeleteIconSVG onClick={this._deleteNote} data-testid="delete-icon" />
+          <h4>{this.props.note.category}</h4>
         </header>
         <p>{this.props.note.text}</p>
       </section>
