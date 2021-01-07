@@ -1,13 +1,11 @@
-import Note from './Note';
-
 export default class Notes {
   constructor() {
     this.notes = [];
     this.observers = [];
   }
 
-  createNote(note) {
-    const newNote = new Note(note);
+  createNote(title, text, category) {
+    const newNote = new Note(title, text, category);
     this.notes.push(newNote);
     this._notify();
   }
@@ -27,5 +25,13 @@ export default class Notes {
 
   _notify() {
     this.observers.forEach(observer => observer(this.notes));
+  }
+}
+
+class Note {
+  constructor(title, text, category) {
+    this.title = title;
+    this.text = text;
+    this.category = category;
   }
 }
